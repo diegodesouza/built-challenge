@@ -12,10 +12,11 @@ function App() {
     return (
         <StoreProvider store={store}>
             <div className='App'>
-                <Header generateSampleData={generateSampleData} />
+                <Header />
                 <Routes>
                     <Route exact path='/' element={<Posts />} />
                     <Route exact path='/posts/edit/:id' element={<EditPost post={post} />} />
+                    <Route exact path='/posts/create' element={<EditPost />} />
                 </Routes>
             </div>
         </StoreProvider>

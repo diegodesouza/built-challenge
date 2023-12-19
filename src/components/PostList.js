@@ -12,12 +12,13 @@ const PostList = () => {
 
     const handleEdit = (post) => {
         handleChange('post', post);
+        handleChange('editing', true);
         navigate(`posts/edit/${post.id}`);
     };
 
     return (
         <div className='post-list'>
-            <h2>Past Posts</h2>
+            <h2>Posts</h2>
             {posts.map((post) => (
                 <Card
                     className='my-2'

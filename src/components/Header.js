@@ -14,11 +14,17 @@ import {
     DropdownItem,
     NavbarText,
 } from 'reactstrap';
-import { Navigate } from 'react-router-dom';
+import { useStore } from '../stores/BlogStore';
+import { useNavigate } from 'react-router-dom';
 
-const Header = ({ heading = 'My Blog', generateSampleData, createPost }) => {
-    const goHome = () => {
-        Navigate('/');
+const Header = ({ heading = 'My Blog' }) => {
+    const store = useStore();
+    const navigate = useNavigate();
+    const { generateSampleData, handleChange } = store;
+    const handleCreatePost = () => {
+        handleChange('post', {});
+        handleChange('editing', false);
+        navigate('/posts/create');
     };
     return (
         <Navbar>
@@ -28,7 +34,7 @@ const Header = ({ heading = 'My Blog', generateSampleData, createPost }) => {
                     <NavLink onClick={generateSampleData}>Generate Sample Data</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink onClick={createPost}>Create Post</NavLink>
+                    <NavLink onClick={handleCreatePost}>Create Post</NavLink>
                 </NavItem>
             </Nav>
         </Navbar>

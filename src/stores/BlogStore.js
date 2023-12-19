@@ -9,6 +9,8 @@ export default class BlogStore {
 
     post = {};
 
+    editing = false;
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -46,11 +48,7 @@ export default class BlogStore {
     // POST /posts/{name}
     createPost = async () => {
         try {
-            const response = await axios.post(this.baseURL);
-            console.log(response.data.response);
-            runInAction(() => {
-                this.post = response.data.response;
-            });
+            return await axios.post(this.baseURL, this.post);
         } catch (error) {
             throw new Error(error);
         } finally {
@@ -63,10 +61,10 @@ export default class BlogStore {
         const post = { title: this.post.title, text: this.post.text };
         try {
             const response = await axios.put(this.baseURL + id, post);
-            console.log(response.data.response);
             runInAction(() => {
                 this.post = response.data.response;
             });
+            return response;
         } catch (error) {
             throw new Error(error);
         } finally {
