@@ -9,8 +9,6 @@ export default class BlogStore {
 
     post = {};
 
-    editing = false;
-
     constructor() {
         makeAutoObservable(this);
     }
@@ -62,8 +60,9 @@ export default class BlogStore {
 
     // PUT /posts/{name}/{id}
     updatePost = async (id) => {
+        const post = { title: this.post.title, text: this.post.text };
         try {
-            const response = await axios.put(this.baseURL + id);
+            const response = await axios.put(this.baseURL + id, post);
             console.log(response.data.response);
             runInAction(() => {
                 this.post = response.data.response;
@@ -94,7 +93,7 @@ export default class BlogStore {
     deletePost = async (id) => {
         try {
             const response = await axios.delete(this.baseURL + id);
-            if (response.status == 200) {
+            if (response.status === 200) {
                 runInAction(() => {
                     this.posts = this.posts.filter((post) => post.id !== id);
                 });
@@ -115,6 +114,12 @@ export default class BlogStore {
         } finally {
             console.log('Done');
         }
+    };
+
+    handlePostChange = (key, value) => {
+        if (!key || !value) return;
+
+        this.post[key] = value;
     };
 
     handleChange = (key, value) => {

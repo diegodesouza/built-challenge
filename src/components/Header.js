@@ -1,19 +1,37 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    NavbarText,
+} from 'reactstrap';
+import { Navigate } from 'react-router-dom';
 
 const Header = ({ heading = 'My Blog', generateSampleData, createPost }) => {
+    const goHome = () => {
+        Navigate('/');
+    };
     return (
-        <div className='header'>
-            <h1>{heading}</h1>
-            <div className='actions'>
-                <button type='button' onClick={generateSampleData}>
-                    Generate Sample Data
-                </button>
-                <button type='button' onClick={createPost}>
-                    Create Post
-                </button>
-            </div>
-        </div>
+        <Navbar>
+            <NavbarBrand href='/'>{heading}</NavbarBrand>
+            <Nav pills>
+                <NavItem>
+                    <NavLink onClick={generateSampleData}>Generate Sample Data</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink onClick={createPost}>Create Post</NavLink>
+                </NavItem>
+            </Nav>
+        </Navbar>
     );
 };
 

@@ -22,12 +22,12 @@ code {
     text-align: left;
 }
 
-.post-list .post {
-    max-width: 600px;
-}
-
 .post-list .post .actions {
     display: flex;
+}
+
+.button {
+    margin-right: 1rem;
 }
 
 .post-list .post + .post {
@@ -41,8 +41,6 @@ code {
     align-items: center;
 }
 
-.edit-post .post .input {
-    display: flex;
-    gap: 10px;
-    margin-top: 1rem;
+.edit-post .post form button:first-of-type {
+    margin-right: 1rem;
 }
