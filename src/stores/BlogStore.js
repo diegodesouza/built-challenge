@@ -48,11 +48,7 @@ export default class BlogStore {
     // POST /posts/{name}
     createPost = async () => {
         try {
-            const response = await axios.post(this.baseURL);
-            console.log(response.data.response);
-            runInAction(() => {
-                this.post = response.data.response;
-            });
+            return await axios.post(this.baseURL, this.post);
         } catch (error) {
             throw new Error(error);
         } finally {
@@ -62,12 +58,13 @@ export default class BlogStore {
 
     // PUT /posts/{name}/{id}
     updatePost = async (id) => {
+        const post = { title: this.post.title, text: this.post.text };
         try {
-            const response = await axios.put(this.baseURL + id);
-            console.log(response.data.response);
+            const response = await axios.put(this.baseURL + id, post);
             runInAction(() => {
                 this.post = response.data.response;
             });
+            return response;
         } catch (error) {
             throw new Error(error);
         } finally {
@@ -94,7 +91,7 @@ export default class BlogStore {
     deletePost = async (id) => {
         try {
             const response = await axios.delete(this.baseURL + id);
-            if (response.status == 200) {
+            if (response.status === 200) {
                 runInAction(() => {
                     this.posts = this.posts.filter((post) => post.id !== id);
                 });
@@ -115,6 +112,12 @@ export default class BlogStore {
         } finally {
             console.log('Done');
         }
+    };
+
+    handlePostChange = (key, value) => {
+        if (!key || !value) return;
+
+        this.post[key] = value;
     };
 
     handleChange = (key, value) => {
